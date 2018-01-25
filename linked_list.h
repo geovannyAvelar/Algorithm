@@ -24,6 +24,7 @@ void add(void* value, linked_list* list);
 void append(void* value, linked_list* list);
 void print_list(linked_list* list);
 bool is_empty(linked_list* list);
+void destroy(linked_list* list);
 
 void add(void* value, linked_list* list) {
   node* new_node = malloc(sizeof(node));
