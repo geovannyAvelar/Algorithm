@@ -22,8 +22,11 @@ typedef struct linked_list {
 
 void add(void* value, linked_list* list);
 void append(void* value, linked_list* list);
+node* get_node(int index, linked_list* list);
+void* get(int index, linked_list* list);
 void print_list(linked_list* list);
 bool is_empty(linked_list* list);
+bool check_index_in_bounds(int index, linked_list* list);
 void destroy(linked_list* list);
 
 void add(void* value, linked_list* list) {
@@ -54,7 +57,37 @@ void append(void* value, linked_list* list) {
     new_node->previous = list->last;
     new_node->next = NULL;
     list->last->next = new_node;
+    list->last = new_node;
   }
+}
+
+node* get_node(int index, linked_list* list) {
+  if(check_index_in_bounds(index, list)) {
+    node* next = list->first;
+    int count = 0;
+
+    while(next != NULL) {
+      if(count == index) {
+        return next;
+      }
+
+      next = next->next;
+      count++;
+    }
+  }
+
+  return NULL;
+}
+
+void* get(int index, linked_list* list) {
+  node* node = get_node(index, list);
+
+  if(node != NULL) {
+    return node->value;
+  }
+
+  return NULL;
+
 }
 
 void print_list(linked_list* list) {
@@ -83,6 +116,10 @@ void print_list(linked_list* list) {
 
 bool is_empty(linked_list* list) {
   return list->size < 1;
+}
+
+bool check_index_in_bounds(int index, linked_list* list) {
+  return !is_empty(list) && (list->size - 1) <= index;
 }
 
 void destroy(linked_list* list) {
