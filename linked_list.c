@@ -20,6 +20,8 @@ void main() {
   printf("Third value is %d\n", third);
   printf("Fourth value is %d\n", fourth);
 
+  remove_first(list);
+
   print_list(list);
   destroy(list);
 
