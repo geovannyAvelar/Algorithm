@@ -58,6 +58,7 @@ void append(void* value, linked_list* list) {
     new_node->next = NULL;
     list->last->next = new_node;
     list->last = new_node;
+    list->size = list->size + 1;
   }
 }
 
@@ -90,7 +91,20 @@ void* get(int index, linked_list* list) {
 
 }
 
+void remove_first(linked_list* list) {
+  if(!is_empty(list)) {
+    list->first = list->first->next;
+    list->size = list->size - 1;
+
+    if(list->size == 0) {
+      list->last = NULL;
+    }
+  }
+}
+
 void print_list(linked_list* list) {
+  printf("[ ");
+
   if(!is_empty(list)) {
     node* next = list->first;
 
@@ -109,9 +123,9 @@ void print_list(linked_list* list) {
 
       next = next->next;
     }
-
-    printf("\n");
   }
+
+  printf("]\n");
 }
 
 bool is_empty(linked_list* list) {
@@ -119,7 +133,7 @@ bool is_empty(linked_list* list) {
 }
 
 bool check_index_in_bounds(int index, linked_list* list) {
-  return !is_empty(list) && (list->size - 1) <= index;
+  return !is_empty(list) && index <= (list->size - 1);
 }
 
 void destroy(linked_list* list) {
